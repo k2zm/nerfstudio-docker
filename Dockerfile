@@ -55,29 +55,29 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v3.31.3/cmake-3.31.3
     && rm /tmp/cmake-install.sh \
     && ln -s /opt/cmake-3.31.3/bin/* /usr/local/bin
     
-# Build and install GLOMAP.
-RUN git clone https://github.com/colmap/glomap.git && \
-    cd glomap && \
-    git checkout "1.0.0" && \
-    mkdir build && \
-    cd build && \
-    mkdir -p /build && \
-    cmake .. -GNinja "-DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES}" \
-        -DCMAKE_INSTALL_PREFIX=/build/glomap && \
-    ninja install -j1 && \
-    cd ~
+# # Build and install GLOMAP.
+# RUN git clone https://github.com/colmap/glomap.git && \
+#     cd glomap && \
+#     git checkout "1.0.0" && \
+#     mkdir build && \
+#     cd build && \
+#     mkdir -p /build && \
+#     cmake .. -GNinja "-DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES}" \
+#         -DCMAKE_INSTALL_PREFIX=/build/glomap && \
+#     ninja install -j1 && \
+#     cd ~
 
-# Build and install COLMAP.
-RUN git clone https://github.com/colmap/colmap.git && \
-    cd colmap && \
-    git checkout "3.9.1" && \
-    mkdir build && \
-    cd build && \
-    mkdir -p /build && \
-    cmake .. -GNinja "-DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES}" \
-        -DCMAKE_INSTALL_PREFIX=/build/colmap && \
-    ninja install -j1 && \
-    cd ~
+# # Build and install COLMAP.
+# RUN git clone https://github.com/colmap/colmap.git && \
+#     cd colmap && \
+#     git checkout "3.9.1" && \
+#     mkdir build && \
+#     cd build && \
+#     mkdir -p /build && \
+#     cmake .. -GNinja "-DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES}" \
+#         -DCMAKE_INSTALL_PREFIX=/build/colmap && \
+#     ninja install -j1 && \
+#     cd ~
 
 # Upgrade pip and install dependencies.
 # pip install torch==2.2.2 torchvision==0.17.2 --index-url https://download.pytorch.org/whl/cu118 && \
@@ -146,8 +146,8 @@ RUN apt-get update && \
         ffmpeg
 
 # Copy packages from builder stage.
-COPY --from=builder /build/colmap/ /usr/local/
-COPY --from=builder /build/glomap/ /usr/local/
+# COPY --from=builder /build/colmap/ /usr/local/
+# COPY --from=builder /build/glomap/ /usr/local/
 COPY --from=builder /usr/local/lib/python3.10/dist-packages/ /usr/local/lib/python3.10/dist-packages/
 COPY --from=builder /usr/local/bin/ns* /usr/local/bin/
 
